@@ -34,7 +34,7 @@ function buildContents(shows) {
 
             var img = document.createElement('img');
             img.setAttribute('class', 'card-img-top');
-            
+
             if (shows[obj].show.image != null) {
                 if (shows[obj].show.image.medium != null) {
                     img.setAttribute('src', shows[obj].show.image.medium);
@@ -74,14 +74,28 @@ function buildContents(shows) {
             cardBody = document.createElement('div');
             cardBody.setAttribute('class', 'card-body');
 
-            var premiere = document.createElement('div');
+            var genres = document.createElement('div');
             var strong = document.createElement('strong');
+            strong.innerText = 'Genres: ';
+            var genresText = 'Not Available   ';
+            if(shows[obj].show.genres.length !=0)
+                genresText = '';
+            for (x in shows[obj].show.genres) {
+                genresText += shows[obj].show.genres[x] + ' | ';
+            }
+            genresText = genresText.substring(0,genresText.length-3);
+            var txtNode = document.createTextNode(genresText);
+            genres.append(strong, txtNode);
+            cardBody.append(genres);
+
+            var premiere = document.createElement('div');
+            strong = document.createElement('strong');
             strong.innerText = 'Premiered On: ';
             var premiereText = 'Not available';
-            if(shows[obj].show.premiered != null){
+            if (shows[obj].show.premiered != null) {
                 premiereText = shows[obj].show.premiered;
             }
-            var txtNode = document.createTextNode(premiereText);
+            txtNode = document.createTextNode(premiereText);
             premiere.append(strong, txtNode);
             cardBody.append(premiere);
 
@@ -89,13 +103,13 @@ function buildContents(shows) {
             strong = document.createElement('strong');
             strong.innerText = 'Schedule: ';
             var scheduleText = 'Not running';
-            if (shows[obj].show.schedule.time != '' || shows[obj].show.schedule.days.length != 0 ) {
+            if (shows[obj].show.schedule.time != '' || shows[obj].show.schedule.days.length != 0) {
                 scheduleText = shows[obj].show.schedule.time + ' ';
                 for (x in shows[obj].show.schedule.days) {
                     scheduleText += shows[obj].show.schedule.days[x] + ' ';
                 }
             }
-            
+
             txtNode = document.createTextNode(scheduleText);
             schedule.append(strong, txtNode);
             cardBody.append(schedule);
@@ -111,12 +125,12 @@ function buildContents(shows) {
             colDiv.append(card);
 
             resultRow.append(colDiv);
-        } 
+        }
         catch (error) {
             console.log(error);
         }
     }
-    if(shows.length == 0){
+    if (shows.length == 0) {
         var notFound = document.createElement('p');
         notFound.className = 'col text-center';
         notFound.innerText = 'Oops!!';
@@ -135,14 +149,14 @@ divContainer.setAttribute('class', 'container bg-light');
 
 //Page Header Text (Jumbotron)
 var jumbotron = document.createElement('div');
-jumbotron.setAttribute('class','jumbotron');
+jumbotron.setAttribute('class', 'jumbotron');
 var h1 = document.createElement('h1');
-h1.setAttribute('class','display-4');
+h1.setAttribute('class', 'display-4');
 h1.innerHTML = 'TV Shows';
 var p = document.createElement('p');
-p.setAttribute('class','lead');
+p.setAttribute('class', 'lead');
 p.innerHTML = 'Search for your favourite TV shows. !!!Responsive Design!!!';
-jumbotron.append(h1,p);
+jumbotron.append(h1, p);
 
 divContainer.append(jumbotron);
 
@@ -169,7 +183,7 @@ button.onclick = getTvShows;
 button.innerText = 'Search';
 divButtonContainer.append(button);
 
-rowDiv.append(divInputContainer,divButtonContainer);
+rowDiv.append(divInputContainer, divButtonContainer);
 divContainer.append(rowDiv);
 
 rowDiv = document.createElement('div');
